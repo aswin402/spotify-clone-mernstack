@@ -1,6 +1,7 @@
 import exprress from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { clerkMiddleware } from '@clerk/express'
 import userRouter from './routers/user_router.js';
 import adminRouter from './routers/admin_router.js';
 import authRouter from './routers/auth_router.js';
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(exprress.json());
+app.use(clerkMiddleware())
 
 app.use('/api/users', userRouter);
 app.use('/api/admin', adminRouter);
