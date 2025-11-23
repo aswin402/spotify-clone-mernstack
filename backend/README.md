@@ -12,7 +12,7 @@ install dependencies by typing npm install in the terminal.
 run the server using npm start command.
 
 ``` npm init -y ```
-``` npm i express mongoose cors dotenv @clark/express cloudinary socket.io ```
+``` npm i express mongoose cors dotenv @clark/express cloudinary socket.io express-fileupload ```
 ``` npm i nodemon --save-dev ```
 
 ## How to use:

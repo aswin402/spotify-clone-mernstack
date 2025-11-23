@@ -33,6 +33,6 @@ export const requireAdmin = async  (req, res, next) => {
         next();
     } catch (error) {
         console.error("Error in admin middleware:", error);
-        res.status(500).json({ message: "Internal server error" });
+        next(error);
     }
 }   
