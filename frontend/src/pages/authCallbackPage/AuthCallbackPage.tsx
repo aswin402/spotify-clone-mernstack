@@ -16,7 +16,7 @@ const AuthCallbackPage = () => {
      try{
       syncAttempted.current = true;
 
-     await axiosInstance.post('/auth-callback', {
+     await axiosInstance.post('/auth/callback', {
        id: user.id,
        firstName:user.firstName,
        lastName:user.lastName,
@@ -31,7 +31,7 @@ const AuthCallbackPage = () => {
     };
 
     syncUser();
-   },[isLoaded, user]);
+   },[isLoaded, user, navigate]);
 
   return (
     <div className="h-screen w-full bg-black flex justify-center items-center">
