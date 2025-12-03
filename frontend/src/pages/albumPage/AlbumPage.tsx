@@ -20,7 +20,7 @@ const AlbumPage = () => {
 	useEffect(() => {
 		if (albumId) fetchAlbumById(albumId);
 	}, [fetchAlbumById, albumId]);
-
+    
 	if (isLoading) return null;
 
 	const handlePlayAlbum = () => {
@@ -47,7 +47,7 @@ const AlbumPage = () => {
 				<div className='relative min-h-full'>
 					{/* bg gradient */}
 					<div
-						className='absolute inset-0 bg-gradient-to-b from-[#5038a0]/80 via-zinc-900/80
+						className='absolute inset-0 bg-linear-to-b from-[#5038a0]/80 via-zinc-900/80
 					 to-zinc-900 pointer-events-none'
 						aria-hidden='true'
 					/>
@@ -58,7 +58,7 @@ const AlbumPage = () => {
 							<img
 								src={currentAlbum?.imageUrl}
 								alt={currentAlbum?.title}
-								className='w-[240px] h-[240px] shadow-xl rounded'
+								className='w-60 h-60 shadow-xl rounded'
 							/>
 							<div className='flex flex-col justify-end'>
 								<p className='text-sm font-medium'>Album</p>
