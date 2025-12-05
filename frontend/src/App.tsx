@@ -6,15 +6,20 @@ import { AuthenticateWithRedirectCallback } from '@clerk/clerk-react';
 import MainLayout from './layout/MainLayout';
 import ChatPage from './pages/chatPage/ChatPage';
 import AlbumPage from './pages/albumPage/AlbumPage';
+import AdminPage from './pages/adminPage/Adminpage';
+import { Toaster } from 'react-hot-toast';
 
 
 function App() {
 
   return ( 
     <>
+      <Toaster position='top-center' />
       <Routes>
       <Route path='/sso-callback' element={<AuthenticateWithRedirectCallback  signInForceRedirectUrl={"/auth-callback"}/>} />
       <Route path='/auth-callback' element={<AuthCallbackPage />} />
+       <Route path='/admin' element={<AdminPage />} />
+
 
       <Route element={<MainLayout />}>
         <Route path='/' element={<HomePage />} />

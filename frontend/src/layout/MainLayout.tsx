@@ -2,6 +2,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { Outlet } from "react-router-dom";
 import LeftSidebar from '../components/LeftSidebar';
 import AudioPlayer from "@/components/AudioPlayer";
+import { PlaybackControls } from '../components/PlaybackControls';
 function MainLayout() {
     const isMobile = false;
     return ( 
@@ -32,7 +33,7 @@ function MainLayout() {
 
 
 </ResizablePanelGroup> 
-
+     <PlaybackControls />
         </div>
      );
 }

@@ -18,23 +18,25 @@ const uploadToCloudinary = async (file) => {
 //create a song===============================================================
 export const createSong = async (req, res, next) => {
   try {
-    if(!req.file || !req.file.audioFile || !req.file.imageFile || req.file.error.code === 'LIMIT_FILE_SIZE') {
-      return res.status(400).json({ message: "No file uploaded" });
+    if(!req.files || !req.files.audioFile || !req.files.imageFile) {
+      return res.status(400).json({ message: "Please upload both audio and image files" });
     }
 
-    const { title, artist, album } = req.body;
+    const { title, artist, duration, albumId } = req.body;
     
- 
-    const audioFile=req.file.audioFile;
-    const imageFile=req.file.imageFile;
-    const song= new Song({
+    const audioFile = req.files.audioFile;
+    const imageFile = req.files.imageFile;
+
+    const audioUrl = await uploadToCloudinary(audioFile);
+    const imageUrl = await uploadToCloudinary(imageFile);
+
+    const song = new Song({
       title,
       artist,
       audioUrl,
       imageUrl,
-      duraction,
-      albumId : albumId,
-      
+      duration: parseInt(duration) || 0,
+      albumId: albumId || null,
     });
 
     await song.save();
@@ -47,7 +49,6 @@ export const createSong = async (req, res, next) => {
   } catch (error) {
     console.error("Error creating song:", error);
     next(error);
-    
   }
 };
 
