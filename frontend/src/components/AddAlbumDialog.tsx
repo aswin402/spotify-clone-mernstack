@@ -10,11 +10,13 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { axiosInstance } from "@/lib/axios";
+import { useMusicStore } from "@/stores/useMusicStore";
 import { Plus, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 const AddAlbumDialog = () => {
+	const { fetchAlbums } = useMusicStore();
 	const [albumDialogOpen, setAlbumDialogOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -22,7 +24,7 @@ const AddAlbumDialog = () => {
 	const [newAlbum, setNewAlbum] = useState({
 		title: "",
 		artist: "",
-		releaseYear: new Date().getFullYear(),
+		releaseDate: new Date().toISOString().split('T')[0],
 	});
 
 	const [imageFile, setImageFile] = useState<File | null>(null);
@@ -45,7 +47,7 @@ const AddAlbumDialog = () => {
 			const formData = new FormData();
 			formData.append("title", newAlbum.title);
 			formData.append("artist", newAlbum.artist);
-			formData.append("releaseYear", newAlbum.releaseYear.toString());
+			formData.append("releaseDate", newAlbum.releaseDate);
 			formData.append("imageFile", imageFile);
 
 			await axiosInstance.post("/admin/albums", formData, {
@@ -57,13 +59,15 @@ const AddAlbumDialog = () => {
 			setNewAlbum({
 				title: "",
 				artist: "",
-				releaseYear: new Date().getFullYear(),
+				releaseDate: new Date().toISOString().split('T')[0],
 			});
 			setImageFile(null);
 			setAlbumDialogOpen(false);
 			toast.success("Album created successfully");
-		} catch (error: any) {
-			toast.error("Failed to create album: " + error.message);
+			await fetchAlbums();
+		} catch (error) {
+			const errorMessage = error instanceof Error ? error.message : "Failed to create album";
+			toast.error("Failed to create album: " + errorMessage);
 		} finally {
 			setIsLoading(false);
 		}
@@ -125,15 +129,12 @@ const AddAlbumDialog = () => {
 						/>
 					</div>
 					<div className='space-y-2'>
-						<label className='text-sm font-medium'>Release Year</label>
+						<label className='text-sm font-medium'>Release Date</label>
 						<Input
-							type='number'
-							value={newAlbum.releaseYear}
-							onChange={(e) => setNewAlbum({ ...newAlbum, releaseYear: parseInt(e.target.value) })}
+							type='date'
+							value={newAlbum.releaseDate}
+							onChange={(e) => setNewAlbum({ ...newAlbum, releaseDate: e.target.value })}
 							className='bg-zinc-800 border-zinc-700'
-							placeholder='Enter release year'
-							min={1900}
-							max={new Date().getFullYear()}
 						/>
 					</div>
 				</div>

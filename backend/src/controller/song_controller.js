@@ -45,9 +45,6 @@ export const getFeaturedSongs = async (req, res) => {
       }
     ]);
     if (!featuredSongs.length) {
-      {
-        console.log("Error fetching featured songs:", error);
-      }
       return res.status(404).json({ message: "No featured songs found" });
     }
     res.status(200).json(featuredSongs);

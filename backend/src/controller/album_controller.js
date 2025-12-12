@@ -1,7 +1,7 @@
 import {Album} from "../models/album_model.js";
 export const getAlbums = async (req, res, next) => {
   try {
-    const albums = await Album.find();/*populate('songs')*/
+    const albums = await Album.find().populate('songs');
     res.status(200).json(albums);
   } catch (error) {
     console.error("Error fetching albums:", error);

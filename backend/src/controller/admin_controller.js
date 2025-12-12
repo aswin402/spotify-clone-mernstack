@@ -81,8 +81,13 @@ export const deleteSong = async (req, res, next) => {
 //create an album===============================================================
 export const createAlbum = async (req, res, next) => {
  try {
+  if(!req.files || !req.files.imageFile) {
+    return res.status(400).json({ message: "Please upload an image file" });
+  }
+
   const {title, artist, releaseDate} = req.body;
-  const imageUrl= await uploadToCloudinary(imageFile);
+  const imageFile = req.files.imageFile;
+  const imageUrl = await uploadToCloudinary(imageFile);
 
   const album=new Album({
     title,

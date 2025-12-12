@@ -1,4 +1,4 @@
-import exprress from 'express';
+import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { clerkMiddleware } from '@clerk/express'
@@ -18,7 +18,7 @@ import { connectDB } from './lib/db.js';
 
 dotenv.config();
 const __dirname = path.resolve();
-const app = exprress();
+const app = express();
 const PORT = process.env.PORT || 5000;
 
 const httpServer = createServer(app);
@@ -32,7 +32,7 @@ app.use(cors(
     credentials: true,
   }
 ));
-app.use(exprress.json());
+app.use(express.json());
 app.use(clerkMiddleware())
 app.use(fileUpload({
   useTempFiles: true,

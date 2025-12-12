@@ -21,9 +21,10 @@ export const getStats= async (req, res) => {
       totalSongs,
       totalUsers,
       totalAlbums, 
-      uniqueArtists,
+      totalArtists: uniqueArtists,
     });   
   } catch (error) {
-    
+    console.error("Error fetching stats:", error);
+    res.status(500).json({ message: "Error fetching stats", error: error.message });
   }
 }
